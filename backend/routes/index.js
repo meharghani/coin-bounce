@@ -1,39 +1,39 @@
-const express  = require('express');
-const authController = require('../controller/authController');
-const auth = require('../middleware/auth');
-const blogController = require('../controller/blogController');
-const commentController = require('../controller/commentController');
-
+const express = require("express");
+const authController = require("../controller/authController");
+const auth = require("../middleware/auth");
+const blogController = require("../controller/blogController");
+const commentController = require("../controller/commentController");
+const cors = require("cors");
 const router = express.Router();
 
-router.get('/test', (req, res)=>res.json({msg: 'Working'}));
+router.get("/test", (req, res) => res.json({ msg: "Working" }));
 
 //user
 //Login
-router.post('/login',authController.login)
+router.post("/login", authController.login);
 //register
-router.post('/register', authController.register);
+router.post("/register", authController.register);
 //logout
-router.post('/logout',auth, authController.logout);
+router.post("/logout", auth, authController.logout);
 //refresh
-router.post('/refresh', authController.refresh);
+router.post("/refresh", authController.refresh);
 //blog
 //CRUD
 //create
-router.post('/blog', auth, blogController.create);
+router.post("/blog", auth, blogController.create);
 // read all blog
-router.get('/blog/all', auth, blogController.getAll);
+router.get("/blog/all", auth, blogController.getAll);
 //read blog by id
-router.get('/blog/:id', auth, blogController.getById);
+router.get("/blog/:id", auth, blogController.getById);
 //update
-router.put('/blog', auth, blogController.update);
+router.put("/blog", auth, blogController.update);
 //delete
-router.delete('/blog/:id', auth, blogController.delete);
+router.delete("/blog/:id", cors(), auth, blogController.delete);
 
 //comment
 //create comment
-router.post('/comment', auth, commentController.create);
+router.post("/comment", auth, commentController.create);
 //read comment by blog id
-router.get('/comment/:id',auth, commentController.getById);
+router.get("/comment/:id", auth, commentController.getById);
 
 module.exports = router;
